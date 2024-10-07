@@ -14,8 +14,10 @@ def handle_client(client_socket):
                 data = client_socket.recv(1024)
                 if not data:
                     break
-                client_socket.sendall(data)
-                logging.info(f"Data exchanged with {client_socket.getpeername()}")
+                message = data.decode()
+                response = f"Echo: {message}"
+                client_socket.sendall(response.encode())
+                logging.info(f"Received from {client_socket.getpeername()}: {message}")
         finally:
             logging.info(f"{client_socket.getpeername()} disconnected")
 
